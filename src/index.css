@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --color-black-*: initial;
+  --color-purple-*: initial;
+  --color-purple-800: #393a4b;
+  --color-purple-700: #4d5067;
+  --color-purple-600: #5b5e7e;
+  --color-purple-300: #c8cbe7;
+  --color-purple-100: #e3e4f1;
+  --color-gray-*: initial;
+  --color-gray-300: #d1d2da;
+  --color-gray-50: #fafafa;
+  --color-navy-950: #171823;
+  --color-navy-900: #25273d;
+  --color-navy-850: #494c6b;
+  --color-blue-*: initial;
+  --color-blue-500: #3a7cfd;
+
+  --text-preset-1: 1.125rem;
+  --text-preset-1--line-height: 1;
+  --text-preset-1--letter-spacing: -0.25px;
+  --text-preset-1--font-weight: 400;
+
+  --text-preset-2: 0.875rem;
+  --text-preset-2-line-height: 1;
+  --text-preset-2-letter-spacing: -0.25px;
+  --text-preset-2-font-weight: 700;
+
+  --text-preset-4: 0.875rem;
+  --text-preset-4-line-height: 1;
+  --text-preset-4-letter-spacing: -0.25px;
+  --text-preset-4-font-weight: 400;
+
+  --text-preset-4: 0.75rem;
+  --text-preset-4-line-height: 1;
+  --text-preset-4-letter-spacing: -0.25px;
+  --text-preset-4-font-weight: 400;
+}
