@@ -19,6 +19,7 @@ function App() {
       />
       <div className="z-4">
         <Routes>
+          <Route path="/" element={<Navigate to="/todos" replace />} />
           <Route path="/login" element={<Login />} />
           <Route path="/todos" element={<Todos />} />
         </Routes>
