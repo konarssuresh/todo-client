@@ -15,6 +15,7 @@ const Todos = () => {
   const { selectedMenu } = useToDoStore();
 
   const displayData = useMemo(() => {
+    if (!data) return [];
     if (selectedMenu === TODO_OPTIONS.ALL) {
       return data;
     }
@@ -42,7 +43,7 @@ const Todos = () => {
           <div className="flex flex-col gap-4 pt-4 bg-white  shadow-2xl dark:bg-navy-900">
             <div className="flex flex-col gap-4 h-[62vh] overflow-x-clip overflow-y-auto">
               <AnimatePresence>
-                {displayData?.map((item) => (
+                {displayData?.map?.((item) => (
                   <Fragment key={item._id}>
                     <Todos.Item item={item} />
                     <hr className="text-purple-300 dark:text-purple-800" />
@@ -153,7 +154,7 @@ const Actions = () => {
   const itemsLeft = useMemo(() => {
     if (isLoading) return "-";
 
-    return data.filter((item) => !item.completed).length;
+    return data?.filter?.((item) => !item.completed).length;
   }, [data, isLoading]);
   return (
     <div className="flex flex-row justify-between text-purple-600 items-center pb-4 px-2">
