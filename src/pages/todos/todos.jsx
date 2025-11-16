@@ -4,15 +4,18 @@ import { motion as Motion, AnimatePresence } from "motion/react";
 import clsx from "clsx";
 import IconCross from "../../components/common/IconCross";
 import IconCheck from "../../components/common/IconCheck";
+import IconLogout from "../../components/common/IconLogout";
 import { useFetchTodoQuery } from "./hooks/useFetchTodoQuery";
 import { useUpdateTodoMutation } from "./hooks/useUpdateTodoMutation";
 import { useDeleteTodoMutation } from "./hooks/useDeleteTodoMutation";
 import { useAddTodoMutation } from "./hooks/useAddTodoMutation";
+import { useLogout } from "../../hooks/useLogout";
 import { useToDoStore, TODO_OPTIONS } from "../../store/useTodoStore";
 
 const Todos = () => {
   const { data, isLoading } = useFetchTodoQuery();
   const { selectedMenu } = useToDoStore();
+  const { mutate: logout } = useLogout();
 
   const displayData = useMemo(() => {
     if (!data) return [];
@@ -31,11 +34,21 @@ const Todos = () => {
   }
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <div className="w-screen h-screen flex justify-center items-start md:items-center">
       <div className="flex flex-col  w-full px-6 py-9 justify-center">
         <div className="flex flex-col gap-5">
           <div className="flex flex-row items-center justify-between">
             <h1 className="text-2xl text-white tracking-[0.3em]"> TODO </h1>
+            <Motion.button
+              className="cursor-pointer"
+              initial={{ scale: 0.5 }}
+              animate={{ scale: 1 }}
+              whileTap={{ scale: 0.6 }}
+              whileHover={{ scale: 1.4 }}
+              onClick={logout}
+            >
+              <IconLogout />
+            </Motion.button>
           </div>
 
           <Todos.Input />
