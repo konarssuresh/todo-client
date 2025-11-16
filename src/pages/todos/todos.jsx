@@ -1,5 +1,6 @@
 import { Fragment, useCallback, useMemo, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { motion as Motion, AnimatePresence } from "motion/react";
 import clsx from "clsx";
 import IconCross from "../../components/common/IconCross";
 import IconCheck from "../../components/common/IconCheck";
@@ -39,13 +40,15 @@ const Todos = () => {
           <Todos.Input />
 
           <div className="flex flex-col gap-4 pt-4 bg-white  shadow-2xl dark:bg-navy-900">
-            <div className="flex flex-col gap-4 h-[62vh] overflow-auto">
-              {displayData?.map((item) => (
-                <Fragment key={item._id}>
-                  <Todos.Item item={item} />
-                  <hr className="text-purple-300 dark:text-purple-800" />
-                </Fragment>
-              ))}
+            <div className="flex flex-col gap-4 h-[62vh] overflow-x-clip overflow-y-auto">
+              <AnimatePresence>
+                {displayData?.map((item) => (
+                  <Fragment key={item._id}>
+                    <Todos.Item item={item} />
+                    <hr className="text-purple-300 dark:text-purple-800" />
+                  </Fragment>
+                ))}
+              </AnimatePresence>
             </div>
             <Todos.Actions />
           </div>
@@ -95,7 +98,13 @@ const Item = ({ item }) => {
   };
 
   return (
-    <div className="flex flex-row justify-between px-2">
+    <Motion.div
+      className="flex flex-row justify-between px-2"
+      initial={{ x: 200 }}
+      whileInView={{ x: 0 }}
+      transition={{ duration: 0.25 }}
+      exit={{ x: -200 }}
+    >
       <div className="flex flex-row items-center gap-6">
         <button
           onClick={handleClick}
@@ -122,16 +131,18 @@ const Item = ({ item }) => {
           {item?.title}
         </p>
       </div>
-      <button
+      <Motion.button
+        whileHover={{ scale: 1.3 }}
+        whileTap={{ scale: 0.8 }}
         className={clsx({
-          "text-navy-850": true,
+          "text-navy-850 cursor-pointer": true,
           "dark:text-purple-800": true,
         })}
         onClick={handleDeleteTodo}
       >
         <IconCross />
-      </button>
-    </div>
+      </Motion.button>
+    </Motion.div>
   );
 };
 
