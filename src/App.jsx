@@ -1,10 +1,26 @@
+import { useEffect } from "react";
 import "./App.css";
 import clsx from "clsx";
 import { Routes, Route, Navigate } from "react-router";
 import Login from "./pages/login/login.jsx";
 import Todos from "./pages/todos/todos.jsx";
+import { useThemeStore } from "./store/useThemeStore.js";
 
 function App() {
+  const { theme } = useThemeStore();
+
+  useEffect(() => {
+    // keep daisyui theme in sync and toggle tailwind's dark class
+    // daisyui reads `data-theme` attribute on <html> / <body>
+    document.documentElement.dataset.theme =
+      theme === "dark" ? "dark" : "light";
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
   return (
     <div>
       <section

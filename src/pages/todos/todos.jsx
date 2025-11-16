@@ -5,17 +5,21 @@ import clsx from "clsx";
 import IconCross from "../../components/common/IconCross";
 import IconCheck from "../../components/common/IconCheck";
 import IconLogout from "../../components/common/IconLogout";
+import IconMoon from "../../components/common/IconMoon";
+import IconSun from "../../components/common/IconSun";
 import { useFetchTodoQuery } from "./hooks/useFetchTodoQuery";
 import { useUpdateTodoMutation } from "./hooks/useUpdateTodoMutation";
 import { useDeleteTodoMutation } from "./hooks/useDeleteTodoMutation";
 import { useAddTodoMutation } from "./hooks/useAddTodoMutation";
 import { useLogout } from "../../hooks/useLogout";
 import { useToDoStore, TODO_OPTIONS } from "../../store/useTodoStore";
+import { useThemeStore } from "../../store/useThemeStore";
 
 const Todos = () => {
   const { data, isLoading } = useFetchTodoQuery();
   const { selectedMenu } = useToDoStore();
   const { mutate: logout } = useLogout();
+  const { theme, toggleTheme } = useThemeStore();
 
   const displayData = useMemo(() => {
     if (!data) return [];
@@ -39,16 +43,28 @@ const Todos = () => {
         <div className="flex flex-col gap-5">
           <div className="flex flex-row items-center justify-between">
             <h1 className="text-2xl text-white tracking-[0.3em]"> TODO </h1>
-            <Motion.button
-              className="cursor-pointer"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              whileTap={{ scale: 0.6 }}
-              whileHover={{ scale: 1.4 }}
-              onClick={logout}
-            >
-              <IconLogout />
-            </Motion.button>
+            <div className="flex flex-row gap-1 text-white">
+              <Motion.button
+                className="cursor-pointer"
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                whileTap={{ scale: 0.6 }}
+                whileHover={{ scale: 1.4 }}
+                onClick={toggleTheme}
+              >
+                {theme === "light" ? <IconMoon /> : <IconSun />}
+              </Motion.button>
+              <Motion.button
+                className="cursor-pointer"
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                whileTap={{ scale: 0.6 }}
+                whileHover={{ scale: 1.4 }}
+                onClick={logout}
+              >
+                <IconLogout />
+              </Motion.button>
+            </div>
           </div>
 
           <Todos.Input />
@@ -120,7 +136,9 @@ const Item = ({ item }) => {
       exit={{ x: -200 }}
     >
       <div className="flex flex-row items-center gap-6">
-        <button
+        <Motion.button
+          whileHover={{ scale: 1.3 }}
+          whileTap={{ scale: 0.6 }}
           onClick={handleClick}
           disabled={isPending}
           className={clsx({
@@ -131,8 +149,11 @@ const Item = ({ item }) => {
           })}
         >
           {item.completed && <IconCheck />}
-        </button>
-        <p
+        </Motion.button>
+        <Motion.p
+          whileHover={{ scale: 1.3 }}
+          whileTap={{ scale: 0.6 }}
+          onClick={handleClick}
           className={clsx({
             "text-preset-1": true,
             "text-gray-300": item?.completed,
@@ -143,7 +164,7 @@ const Item = ({ item }) => {
           })}
         >
           {item?.title}
-        </p>
+        </Motion.p>
       </div>
       <Motion.button
         whileHover={{ scale: 1.3 }}
